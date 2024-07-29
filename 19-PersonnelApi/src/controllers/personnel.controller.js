@@ -87,7 +87,7 @@ module.exports = {
 
     if (username && password) {
       const user = await Personnel.findOne({ username, password });
-      if (user && user.isActive) {
+      if (user) {
         // Set Session:
         req.session = {
           id: user._id,

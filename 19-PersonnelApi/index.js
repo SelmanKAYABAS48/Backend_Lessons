@@ -41,9 +41,6 @@ app.use(
   }),
 );
 
-// Authentication Middleware:
-app.use(require('./src/middlewares/authentication'))
-
 // res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
@@ -52,22 +49,15 @@ app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to PERSONNEL API",
-    // session: req.session,
-    // isLogin: req.isLogin,
-    user: req.user
+    session: req.session,
+    isLogin: req.isLogin,
   });
 });
 
-// /auth
-app.use('/auth', require('./src/routes/auth.router'))
-
-// /tokens
-app.use("/tokens", require("./src/routes/token.router"));
-
-// /departments
+//departments
 app.use("/departments", require("./src/routes/department.router"));
 
-// /personnels
+//personnels
 app.use("/personnels", require("./src/routes/personnel.router"));
 
 //not found routes
@@ -88,10 +78,10 @@ app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 // Syncronization (must be in commentLine):
 // require('./src/helpers/sync')()
 
-// if (process.env.NODE_ENV == "development") {
-//   return;
-//   require("./src/helpers/dataCreate")()
-//     .then((res) => console.log("Data synched"))
-//     .catch((err) => console.error("Data could not synched"));
-// }
+if (process.env.NODE_ENV == "development") {
+  return;
+  require("./src/helpers/dataCreate")()
+    .then((res) => console.log("Data synched"))
+    .catch((err) => console.error("Data could not synched"));
+}
 
