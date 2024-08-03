@@ -84,10 +84,10 @@ app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));
 // Syncronization (must be in commentLine):
 // require('./src/helpers/sync')()
 
-if (process.env.NODE_ENV == "development") {
-  return;
-  require("./src/helpers/dataCreate")()
-    .then((res) => console.log("Data synched"))
-    .catch((err) => console.error("Data could not synched"));
-}
+// if (process.env.NODE_ENV == "development") {
+//   return;
+//   require("./src/helpers/dataCreate")()
+//     .then((res) => console.log("Data synched"))
+//     .catch((err) => console.error("Data could not synched"));
+// }
 
