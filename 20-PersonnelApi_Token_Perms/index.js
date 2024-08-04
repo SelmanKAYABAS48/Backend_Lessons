@@ -41,6 +41,9 @@ app.use(
   }),
 );
 
+//Authentication Middleware:
+
+
 // res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
@@ -55,7 +58,7 @@ app.all("/", (req, res) => {
 });
 
 //auth
-app.use('/auth',require('./src/routes/personnel.router'))
+app.use('/auth',require('./src/routes/auth.router'))
 
 //token
 app.use("/tokens", require("./src/routes/token.router"));

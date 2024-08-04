@@ -4,6 +4,11 @@ const { mongoose } = require('../configs/dbConnection')
 
 //! Her user için özel token oluşturacağım..Burası modeli oluyor data alanı..
 
+// {
+//     "userId":"user'ın id'si eklenecek",
+//     "token":"random-chars-to-here"
+// }
+
 // Token Model:
 
 const TokenSchema = new mongoose.Schema({
