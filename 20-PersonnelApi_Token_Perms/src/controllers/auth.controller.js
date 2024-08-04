@@ -30,6 +30,9 @@ module.exports = {
                  //* Token var mı?
                  let tokenData = await Token.findOne({ userId:user._id}) //? Token. ile token modeline git.findOne yap ve userId: user._id   kullanıcı giriş yapınca 18.satırdaki user ile userId gelecek...yani Token'da userId:user._id bu kullanıcıya ait token var mı kontrol et yapıyorum yani oluşturmuşmuyum eşleştirme yapıyorum
 
+                 //! Kullanıcıya token'ı verdik ve frontEnd bunu local storage'e saklıyor..Kulanıcı sonra başka URL'ye gidiyor...frontend bana bu token'ı Header'da gönderecek..Header'da authorization başlığı altında value'sına Token boşluk benim user'a verdiğim token yazılacak.bunu front end gönderecek header altında....kendi kullanıcılığını tanıtmak adına...token backend'te kimlik no gibi düşün....backend olarak kullanıcıyı verilen tokendan tanıyacağım..token yanlış gelirse silinmişse böyle bir kullanıcı yok diye dönüş olacak.token doğruysa şu kullanıcı giriş yaptı diye söylüyor***user login oldu frontEnd kendi varlığını ispatlamak adına--session cookie varken forntEnd'in yapması gereken bişey yoktu zaten session ve cookie user blgilerini saklıyordu. backend api servisi olarak session cookie'yi tercih etmiyoruz----header başlığı altında token'ı Backend'e gönderiyor...header'da gönderilen token'ı kabul etmemiz lazım..bu neden le authentication middleware'da ayarlamaları yapacağız
+                 
+
                  //* Token yoksa oluştur
 
                  if(!tokenData){
