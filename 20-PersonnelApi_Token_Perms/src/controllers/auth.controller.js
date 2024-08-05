@@ -48,6 +48,7 @@ module.exports = {
                     token:tokenData.token,
                     user
                  })
+                 console.log(user);
 
 
                 }
@@ -75,10 +76,10 @@ module.exports = {
 
         // Token Delete:
         // if (req.user) {
-        //    const data = await Token.deleteOne({ userId: req.user._id })
+        //    const data = await Token.deleteOne({ userId: req.user._id }) //!userId'si req.user._id'sine eşit olan userId'i sil
         // }
 
-        const data = req.user ? await Token.deleteOne({ userId: req.user._id }) : null
+        const data = req.user ? await Token.deleteOne({ userId: req.user._id }) : null //! request user varsa sil yoksa null bırak
 
         res.status(200).send({
             error: false,

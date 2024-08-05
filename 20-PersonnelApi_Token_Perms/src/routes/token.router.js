@@ -7,8 +7,24 @@ const router = require("express").Router();
 
 const token = require("../controllers/token.controller");
 
+const { isAdmin } = require("../middlewares/permissions")
+
 /*  ------------------------------------------------------- */
-router.route("/")
+// router.route("/")
+// .get(isAdmin,token.list)
+// .post(isAdmin,token.create);
+
+// router
+//   .route("/:id")
+//   .get(isAdmin,token.read)
+//   .put(isAdmin,token.update)
+//   .patch(isAdmin,token.update)
+//   .delete(isAdmin,token.delete);
+
+
+router.use(isAdmin) //! aşağıdaki routerlarda isAdmin kontrolü yapıyor bu şekilde..hepsine azmak yerine böyle yaptık
+
+  router.route("/")
 .get(token.list)
 .post(token.create);
 

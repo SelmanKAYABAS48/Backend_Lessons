@@ -4,7 +4,7 @@
 const Token = require('../models/token.model')
 module.exports = async(req,res,next)=>{
 
-    req.user = null
+    req.user = null // öncelikle req.user'ı null yapıyor
 
     // Get token from  Headers:
     const auth = req.headers?.authorization || null // burada headers'ta authorization gelmezse null kabul ediyoruz    //! Token ....tokenKey gelecek olan token 
@@ -14,11 +14,13 @@ module.exports = async(req,res,next)=>{
     // 0.index Value'da yazan Token'a eşit mi
     if(tokenKey && tokenKey[0] == 'Token') {
 
-        const tokenData = await Token.findOne({ token: tokenKey[1]}) .populate('userId')// token field'ı
+        const tokenData = await Token.findOne({ token: tokenKey[1]}) .populate('userId')
+        // populate, MongoDB'deki referans edilen belgeleri çekmek ve belgelerin içeriğini zenginleştirmek için kullanılır. Bu sayede ilişkili veriler daha okunabilir ve kullanışlı hale gelir.
 
         console.log(tokenData);
 
-        if(tokenData) req.user = tokenData.userId
+        if(tokenData) req.user = tokenData.userId //! tokenData'dan gelen userID req.user'a atandı
     }
    next()   // index'te require etmeyi unutma router'ların üstünde olsun
 }
+// session'daki user'ın parolası ve id'si benim için yeterli değil kullanıcının daha fazla bilgisine ihtiyaç duyabilirim parola da değimiş olabilir.bunun için user control adında middleware yapmıştık..
