@@ -71,8 +71,20 @@ module.exports = {
 
     },
 
-    logout:async(req,res)=>{
+    logout: async (req, res) => {
 
-        
+        // Token Delete:
+        // if (req.user) {
+        //    const data = await Token.deleteOne({ userId: req.user._id })
+        // }
+
+        const data = req.user ? await Token.deleteOne({ userId: req.user._id }) : null
+
+        res.status(200).send({
+            error: false,
+            message: 'Logout: OK',
+            data
+        })
+
     }
 }

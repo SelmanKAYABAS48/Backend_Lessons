@@ -8,7 +8,9 @@ const router = require("express").Router();
 const token = require("../controllers/token.controller");
 
 /*  ------------------------------------------------------- */
-router.route("/").get(token.list).post(token.create);
+router.route("/")
+.get(token.list)
+.post(token.create);
 
 router
   .route("/:id")
