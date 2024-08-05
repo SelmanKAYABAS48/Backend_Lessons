@@ -41,14 +41,11 @@ app.use(
   }),
 );
 
-//Authentication Middleware:
-
+// Authentication Middleware:
 app.use(require('./src/middlewares/authentication'))
 
 // res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
-
-
 
 // HomePath:
 app.all("/", (req, res) => {
@@ -57,20 +54,20 @@ app.all("/", (req, res) => {
     message: "Welcome to PERSONNEL API",
     // session: req.session,
     // isLogin: req.isLogin,
-    user:req.user
+    user: req.user
   });
 });
 
-//auth
-app.use('/auth',require('./src/routes/auth.router'))
+// /auth
+app.use('/auth', require('./src/routes/auth.router'))
 
-//token
+// /tokens
 app.use("/tokens", require("./src/routes/token.router"));
 
-//departments
+// /departments
 app.use("/departments", require("./src/routes/department.router"));
 
-//personnels
+// /personnels
 app.use("/personnels", require("./src/routes/personnel.router"));
 
 //not found routes
