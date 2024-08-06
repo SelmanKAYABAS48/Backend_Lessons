@@ -46,6 +46,26 @@ app.use(
 
 const morgan = require('morgan')
 
+// app.use(morgan('tiny'))
+// app.use(morgan('short'))
+// app.use(morgan('dev'))
+//  app.use(morgan('common'))
+//  app.use(morgan('combined'))
+ //Custom Log:
+ app.use(morgan('TIME=":date[iso]" - URL=":url" - Method=":method" - IP=":remote-addr" - Ref=":referrer" - Status=":status" - Sign=":user-agent" (:response-time[digits] ms)'))
+
+ //Write to File:
+
+ const fs = require('node:fs') //! fs module'ü nodeJS'de dosya işlemlerini tuttuğum module.dosya sile ekle taşı işlemleri file system dahili sistem olduğu için npm install yapmama gerek yok
+
+ app.use(morgan('combined',{ 
+      // stream= akış demek cWStream ise akış olduğunda yaz demek
+stream: fs.createWriteStream('./access.log',{ flags:'a+'})  // her dosya işlemlerinde (bütün dillerde dosya açma kapama işlemi yapacağım zaman) ona bir flag ataması yapmam gerekiyor.flag dosyaya nasıl davranacağım onu gösteren bi özellik a+ dosyayı okumak için aç ve ekleme yap yoksa oluştur  --burada access.log dosyasına eriş ve flag'e göre işlem yap //! nodejs file-system-flags'ten araştır
+
+ })) //* 1.log kaydı tutma şekli,2.dosyalama ayarları yani options 
+
+
+
 
 
 /*-------------------------------------------*/
