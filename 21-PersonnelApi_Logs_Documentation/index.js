@@ -41,6 +41,15 @@ app.use(
   }),
 );
 
+/*-------------------------------------------*/
+//Logger
+
+const morgan = require('morgan')
+
+
+
+/*-------------------------------------------*/
+
 // Authentication Middleware:
 app.use(require('./src/middlewares/authentication'))
 
