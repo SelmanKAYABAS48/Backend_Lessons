@@ -80,6 +80,9 @@ console.log(today,typeof today);
 
 /*-------------------------------------------*/
 
+// Morgan Logger:
+app.use(require('./src/middlewares/logger'))
+
 // Authentication Middleware:
 app.use(require('./src/middlewares/authentication'))
 

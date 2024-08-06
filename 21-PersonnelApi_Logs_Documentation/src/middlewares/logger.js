@@ -30,10 +30,13 @@ const now = new Date()
 console.log(now, typeof now); // burada saati saniyesi ile veriyor.tipi object 
 const today = now.toISOString().split('T')[0] // burada objeden string'e çevirmemin sebebi split yapacağım için 2024-08-06T18:05:01.789Z //! aradaki T'ye göre split yaptı  yani t'nin sol tarafına index 0'ı sağ tarafına index 1'i attı   ve [0] index 0'ı istedim !!! bu logları dosyaların orada ana dizinde değil de bir kalsörün içinde tutatcağım
 console.log(today,typeof today);
- app.use(morgan('combined',{ 
+//  app.use(morgan('combined',{ 
 
   // stream: fs.createWriteStream('./access.log',{ flags:'a+'})  })) /access.log dosyanın adı
-  stream: fs.createWriteStream(`./logs/${today}`,{ flags:'a+'})  })) // loglarımılogs klasörü içinde today formatında yani günün tarihi formatında saklıyorum..burada backtick kullanmamın nedeni günlük olarak yani dinamik olarak tuttuğum için 
+  //stream: fs.createWriteStream(`./logs/${today}`,{ flags:'a+'})  })) //? loglarımılogs klasörü içinde today formatında yani günün tarihi formatında saklıyorum..burada backtick kullanmamın nedeni günlük olarak yani dinamik olarak tuttuğum için 
+
+  module.exports = morgan('combined',{
+    stream: fs.createWriteStream(`./logs/${today}`,{ flags:'a+'})})
 
 
 
