@@ -39,7 +39,7 @@ const permissions = require('../middlewares/permissions')
 
 // URL: /personnels
 //http://localhost:8000/personnels/login
-// router.post("/login", personnel.login);
+// router.post("/login", personnel.login);  //! authentication kullandığım için burayı iptal ettim
 // router.all("/logout", personnel.logout);
 
 router.use(permissions.isAdmin)

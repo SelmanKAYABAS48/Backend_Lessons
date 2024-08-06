@@ -37,22 +37,23 @@ const router = require("express").Router();
 
 const department = require("../controllers/department.controller");
 
-// const { isAdmin, isAdminOrLead, isLogin } = require('../middlewares/permissions')
+// const { isAdmin, isAdminOrLead, isLogin } = require('../middlewares/permissions') //! permissions'taki bütün datalar kullanılacağı için destructing yapmadım doğrudan hepsini değişkene atadım ve aşağıda .notasyonu ile kullanıyorum
+
 const permissions = require('../middlewares/permissions')
 
 /* ------------------------------------------------------- */
 
 router.route("/")
-  .get(permissions.isLogin, department.list)
-  .post(permissions.isAdmin, department.create);
+  .get(permissions.isLogin, department.list)//! Görüntülemeyi herhangi bir kullanıcı yapabilir.
+  .post(permissions.isAdmin, department.create); //? admin dışındakiler deparment create edemez
 
 router.route("/:id")
-  .get(permissions.isLogin, department.read)
+  .get(permissions.isLogin, department.read)// departman detay okuma login
   .put(permissions.isAdmin, department.update)
   .patch(permissions.isAdmin, department.update)
   .delete(permissions.isAdmin, department.delete);
 
-router.get("/:id/personnels", permissions.isAdminOrLead, department.personnels);
+router.get("/:id/personnels", permissions.isAdminOrLead, department.personnels); //! departman içindeki personel listelemeyi admin ya da lead yapabilir
 
 module.exports = router;
 
