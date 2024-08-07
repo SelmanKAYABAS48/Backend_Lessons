@@ -80,6 +80,9 @@ console.log(today,typeof today);
 
 /*-------------------------------------------*/
 //DOCUMENTATION:
+// npm i swagger-autogen //! bana json dosyası oluuşturacak 1 Kez çalışacak
+// npm i swagger-ui-express //* json dosyasını swagger'da görüntüleyecek
+// npm i redoc-express //? json dosyasını redoc'ta çalıştıracak
 
 
 
