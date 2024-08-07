@@ -101,7 +101,7 @@ app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { sw
 
  //!Token modeli sadece admin kontolünde olan birşey son kulanıcı bunu görmemeli
 
- //* swagger autogen bütün route'lara karşılık gelen controller'ları yakaladı..bunu category'si şu olsun başlığı bu olsun demek için ince ayarlar yapmam lazım
+ //* swagger autogen bütün route'lara karşılık gelen controller'ları yakaladı..bunu category'si şu olsun başlığı bu olsun demek için ince ayarlar yapmam lazım swagger autogen için ince ayar
 
 
 
