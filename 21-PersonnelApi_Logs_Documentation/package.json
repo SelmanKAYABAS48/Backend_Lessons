@@ -1,7 +1,7 @@
 {
   "name": "personnelapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "Personnel Management System API Service v.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Abeska",
   "license": "ISC",
   "dependencies": {
     "cookie-session": "^2.0.0",

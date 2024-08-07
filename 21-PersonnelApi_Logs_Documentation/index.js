@@ -85,6 +85,25 @@ console.log(today,typeof today);
 // npm i redoc-express //? json dosyasını redoc'ta çalıştıracak
 
 
+app.use('/documents/json', (req, res) => {
+  res.sendFile('swagger.json', { root: '.' })
+})
+
+//SWAGGER:
+
+const swaggerUi =require('swagger-ui-express')
+const swaggerJson = require('./swagger.json') 
+app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { swaggerOptions: { persistAuthorization: true } }))
+//? tokenı yazdığımızda kaybolmaması içn ayar
+ //* URL olarak /documents/swagger'a gittiğimde swaggerUI .serve swagger'ın ön ihtiyaçlarını karşılayacak..ve sonra (önemli olan json dosyasının varlığı )
+ //! SWAGGER'I ÇALIŞTIRAN MİDDLEWARE
+ //? swagger autogen all ve use metodunu yakalamaz
+
+ //!Token modeli sadece admin kontolünde olan birşey son kulanıcı bunu görmemeli
+
+ //* swagger autogen bütün route'lara karşılık gelen controller'ları yakaladı..bunu category'si şu olsun başlığı bu olsun demek için ince ayarlar yapmam lazım
+
+
 
 /*-------------------------------------------*/
 
