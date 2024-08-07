@@ -103,6 +103,14 @@ app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, { sw
 
  //* swagger autogen bütün route'lara karşılık gelen controller'ları yakaladı..bunu category'si şu olsun başlığı bu olsun demek için ince ayarlar yapmam lazım swagger autogen için ince ayar
 
+ //REDOC:
+
+ const redoc = require('redoc-express')
+
+ // url verdim redoc'ı çalıştırdım() ayarlar vereceğim için {} açtım
+ app.use('/documents/redoc',redoc({specUrl:'/documents/json',title:'Redoc UI'}))
+
+
 
 
 /*-------------------------------------------*/

@@ -31,13 +31,7 @@ module.exports = {
         schema:{
         username:'*String',
         password:'*String'
-
-
-        }
-        }
-
-
-
+        }}
         */
 
         const { username, password } = req.body
