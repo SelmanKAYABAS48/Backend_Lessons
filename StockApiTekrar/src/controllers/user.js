@@ -29,7 +29,7 @@ module.exports = {
         })
     },
 
-    create: async (req, res) => {
+    create: async (req, res) => { // create arka planda save çalıştırır
         /*
             #swagger.tags = ["Users"]
             #swagger.summary = "Create User"
