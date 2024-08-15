@@ -96,11 +96,17 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', function(next){
 
-    console.log('pre-save-çalıştı');
+    // console.log('pre-save-çalıştı');
 
-    console.log(this);
+    // console.log(this);
 
-    next() 
+    const data = this // this ile gelen veriyi dataya aktardım
+
+    //* Email Control:
+
+    const isEmailValidated =
+
+    // next() 
 
     //! next çalışmayınca create işlemine geçemiyor
 
@@ -115,7 +121,7 @@ module.exports = mongoose.model('User',UserSchema)
 
            /*-----------------*
 
-           next()'ten önce console'a this yazdım ve aşağıdaki data'yı aldım.bu database'e gönderilecek olan data
+           next()'ten önce console'a this yazdım ve aşağıdaki data'yı aldım.bu database'e yazılacak olan data
 {
     username: 'staff1',
     password: 'aA?123456',
@@ -125,10 +131,14 @@ module.exports = mongoose.model('User',UserSchema)
     isActive: true,
     isStaff: true,
     isAdmin: true,
+
+    aşağıdaki  data normalde this ile birlikte eklenen data
     _id: new ObjectId("66be240da03fc793fb0260fc"),
     createdAt: 2024-08-15T15:51:41.904Z,
     updatedAt: 2024-08-15T15:51:41.904Z
   }
 
            /*-----------------*/
+
+           //! Bu data pre save ile tam kaydedilecekken next aktif olmadığı için işlem yapmadı
 
