@@ -103,8 +103,19 @@ UserSchema.pre('save', function(next){
     const data = this // this ile gelen veriyi dataya aktardım
 
     //* Email Control:
+    //! email gönderilemeyebilir.Mesala update yaparken.Bu nedenle email gönderilmişse onun validasyonunu yapsın
 
-    const isEmailValidated =
+    //? Email'in meial formatında gönderilip gönderilmediğini modeldeki validate kullanılarak değil  pre save kullanrak yapıyoruz.
+
+//! Burada email gönderilmişse aşağıdaki validasyondan geçip geçmediğini kontrol et.Eğer email datası gelmemişse direk true yap..true yap kısmı update'te email gelmeyebilir.bu nedenle doğruca true yaptık
+    const isEmailValidated = data.email ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.email) :true 
+
+    //*Eğer email validasyondan geçtiyse
+    if(isEmailValidated){
+        console.log('Email is ok');
+    }else{
+        
+    }
 
     // next() 
 
