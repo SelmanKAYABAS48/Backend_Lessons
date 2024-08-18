@@ -41,6 +41,7 @@ const { mongoose } = require('../configs/dbConnection')
 // User Model:
 
 
+
 const UserSchema = new mongoose.Schema({
     username:{
         type:String,
@@ -94,15 +95,26 @@ const UserSchema = new mongoose.Schema({
 /*---------------------------------------------------------------*/
 // https://mongoosejs.com/docs/middleware.html
 
-UserSchema.pre('save', function(next){
+const passwordEncrypt = require('../helpers/passwordEncrypt')
+
+// save create aşaması ancak burada hem save hemde update yapmak istersem array içinde yazabilirim
+UserSchema.pre(['save','updateOne'], function(next){
 
     // console.log('pre-save-çalıştı');
 
     // console.log(this);
 
-    const data = this // this ile gelen veriyi dataya aktardım
+    // const data = this //* this ile gelen veriyi dataya aktardım
+    //* create yaparken kullandığım data this.ben burada aslında data'yı güncelledim  ancak benim güncelleme yapmam gereken yer this'dir
 
-    //* Email Control:
+    //! Eğer güncelleme yapıyorsam this._update datasını kabul et.Güncellerken data = this._update içinde gelecek kaydederkense data = this içinde gelecek
+    const data = this?._update ?? this
+
+
+
+
+
+    // Email Control:
     //! email gönderilemeyebilir.Mesala update yaparken.Bu nedenle email gönderilmişse onun validasyonunu yapsın
 
     //? Email'in meial formatında gönderilip gönderilmediğini modeldeki validate kullanılarak değil  pre save kullanrak yapıyoruz.
@@ -117,8 +129,24 @@ const isEmailValidated = data.email ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3
 
         const isPasswordValidated = data.password ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.password) : true 
 
+//* yukarıda this'i alıp dataya'assign ettim..sonra data içindeki email ve password'ü kontrol ettim.Eğer herşey yolundaysa data.password'ü şifrele ve data.password'ün şifrelenmiş halini this.password'e ata.Çünkü bana nihai olarak this'in içindeki password lazım
+
+
+
+
         if(isPasswordValidated){
-            console.log('Password is ok');
+            // console.log('Password is ok');
+
+            // data.password = passwordEncrypt(data.password) 
+            this.password = passwordEncrypt(data.password) 
+
+            next()
+            // burada data.password'ü şifreli halile değiştir yaptım
+ // benim asıl şifrelemem gereken yer this'in içindeki password'ü şifrelemem gerek bu nedenle this.passwor yazıyorum
+
+            //! this = data  // this parametresi direkt assign edilmez
+
+
         }
 
         else{
