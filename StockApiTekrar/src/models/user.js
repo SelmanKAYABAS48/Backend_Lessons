@@ -108,16 +108,41 @@ UserSchema.pre('save', function(next){
     //? Email'in meial formatında gönderilip gönderilmediğini modeldeki validate kullanılarak değil  pre save kullanrak yapıyoruz.
 
 //! Burada email gönderilmişse aşağıdaki validasyondan geçip geçmediğini kontrol et.Eğer email datası gelmemişse direk true yap..true yap kısmı update'te email gelmeyebilir.bu nedenle doğruca true yaptık
-    const isEmailValidated = data.email ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.email) :true 
+const isEmailValidated = data.email ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) : true
 
     //*Eğer email validasyondan geçtiyse
     if(isEmailValidated){
-        console.log('Email is ok');
+        // console.log('Email is ok');
+        //* Password validation:
+
+        const isPasswordValidated = data.password ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.password) : true 
+
+        if(isPasswordValidated){
+            console.log('Password is ok');
+        }
+
+        else{
+            console.log('Password is not validated');
+
+            // throw new Error('Password is not validated')
+
+            next (new Error('Password is not validated'))
+        }
+
+
+
+
     }else{
-        
+//burada request error status'u gönderemem çünkü call back yaptığım yerde req.yok.ancak custom error yaparsam öyle gönderirim custom error,error olşturan bir classtır
+
+        // throw new Error ('Email is not validated') //?error handler'a göndermemin bir yolu böyledir.
+
+        next(new Error ('Email is not validated')) //! Error handler'a göndermenin 2.yolu
+
+
     }
 
-    // next() 
+    
 
     //! next çalışmayınca create işlemine geçemiyor
 
