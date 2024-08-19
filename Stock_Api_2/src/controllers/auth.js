@@ -101,6 +101,8 @@ module.exports = {
 
 
    
+//! JWT kullandığım zaman access token'ın bir 30 dk bir ömrü var.30 dk bitmeden veya bittiğinde yeni access token istediğim zaman refresh token ile yeni bir access token isteyebiliyorum
+
     refresh: async (req, res) => {
         /*
             #swagger.tags = ['Authentication']
@@ -117,7 +119,11 @@ module.exports = {
             }
         */
 
+            //* refresh token req.body'de bearer altında refreshToken adında gelecek
+
         const refreshToken = req.body?.bearer?.refreshToken
+
+//body'den refresh token'ı al ve refresh tokenı process.env.REFRESS_KEY ile çöz.daha doğrusu refresh token içindeki datayı doğrula.Eğer refresh key içindeki datanın süresi geçmemişse yani herşey yolundaysa callback fonksiyonunda 2 data var ilki err eğer hata varsa bu gelecek ikinci param ise hata yoksa gelecek olan datanın kendisi..özetle refresh token'ı verify ettiği zaman userData gelecek
 
         if (refreshToken) {
 
@@ -131,13 +137,15 @@ module.exports = {
 
                     const { _id, password } = userData
 
-                    if (_id && password) {
+                    //* userdata'dan kullanıcının id'si ve password'ünü alıyoruz yani JWT refresh token'dan aldık
+
+                    if (_id && password) { //* id ve password var mı ve aşağıda bu id'ye sahip kullanıcıyı bul dedik
 
                         const user = await User.findOne({ _id })
 
                         if (user && user.password == password) {
 
-                            if (user.isActive) {
+                            if (user.isActive) { //* Doğruladığım kullanıcı aktifse yeni bir access token oluşturuyoruz ve res.send ile gönderiyoruz
 
                                 // JWT:
                                 const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m' })
