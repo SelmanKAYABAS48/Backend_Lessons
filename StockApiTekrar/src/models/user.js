@@ -105,10 +105,15 @@ UserSchema.pre(['save','updateOne'], function(next){
     // console.log(this);
 
     // const data = this //* this ile gelen veriyi dataya aktardım
-    //* create yaparken kullandığım data this.ben burada aslında data'yı güncelledim  ancak benim güncelleme yapmam gereken yer this'dir
+    //* create yaparken kullandığım data this.ben burada aslında data'yı güncelledim  ancak benim güncelleme yapmam gereken yer this'dir 
+
+    //? save'de datalar this içinde geldi _update'te ise datalar this._update içinde geldi
 
     //! Eğer güncelleme yapıyorsam this._update datasını kabul et.Güncellerken data = this._update içinde gelecek kaydederkense data = this içinde gelecek
-    const data = this?._update ?? this
+    
+
+    //*burada this._update geirse bunu kabul et gelmezse this'i kabul et yaptık ve veri tabanına yazılacak olan data'yı data isimli değişkene aktardık 
+    const data = this?._update ?? this  //! normalde _ alt çizgi verinin değiştirilmemesi hatta çağırılmaması gerektiğini söylüyor bize içeriği nedeniyle önemli olması hasebiyle
 
 
 
@@ -138,7 +143,20 @@ const isEmailValidated = data.email ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3
             // console.log('Password is ok');
 
             // data.password = passwordEncrypt(data.password) 
-            this.password = passwordEncrypt(data.password) 
+
+            // this.password = passwordEncrypt(data.password) 
+
+            if(this?._update){
+// UPDATE'te ise //* this'in _update'ini güncelliyorum
+
+this._update.password = passwordEncrypt(data.password)
+            }
+            else{
+
+            // CREATE
+            //* create'te this'in kendisini güncelliyorum
+                this.password = passwordEncrypt(data.password) 
+            }
 
             next()
             // burada data.password'ü şifreli halile değiştir yaptım
@@ -206,3 +224,7 @@ module.exports = mongoose.model('User',UserSchema)
 
            //! Bu data pre save ile tam kaydedilecekken next aktif olmadığı için işlem yapmadı
 
+
+
+           //* controller'daki update bölümünde   
+           // const data = await User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }) findById metodunu kullandığımız zaman pre save ve updateOne kısmında updateOne'ı yazmamıza gerek yok save onu da çalıştırır
