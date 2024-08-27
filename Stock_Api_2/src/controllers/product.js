@@ -23,7 +23,12 @@ module.exports = {
             `
         */
 
-        const data = await res.getModelList(Product)
+        // const data = await res.getModelList(Product,{},['categoryId','brandId']) // bu şekilde de populate yapabilirim.
+
+        //! ancak ekstra ayarlar yapmak istiyorsam  obje içinde yazarım
+        const data = await res.getModelList(Product, {}, [
+            {       },
+            {       }]) // bu şekilde de populate yapabilirim.
 
         res.status(200).send({
             error: false,
@@ -99,7 +104,7 @@ module.exports = {
         */
 
         const data = await Product.deleteOne({ _id: req.params.id })
-    
+
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data

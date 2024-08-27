@@ -198,7 +198,10 @@ const jwt = require('jsonwebtoken')
 // data = req.body
 const checkUserEmailAndPassword = function (data) {
 
+
     return data
+
+    //! return, fonksiyonun çalışmasını sonlandırır. return ifadesinden sonra gelen hiçbir kod çalıştırılmaz. Bu, belirli bir koşul altında fonksiyonun erken sonlandırılması gerektiğinde kullanışlı olabilir.
     
     // Email Control:
     const isEmailValidated = data.email ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) : true
@@ -268,10 +271,14 @@ module.exports = {
                     "lastName": "test",
                 }
             }
-        */
+        */ 
 
         // const data = await User.create(req.body)
         const data = await User.create(checkUserEmailAndPassword(req.body))
+
+        //? benim sistemime göre user login olunca bir tane token vermesi gerekiyor..
+
+        //! user create olduktan sonra eğer onun içinde 1 tane token oluşturursam kullanıcı tekrardan login olmak zorunda kalmaz.zaten login olmuş olur. Frontend token'ı alacak ve kaldığı yerden eder devam eder
 
         /* AUTO LOGIN */
         // SimpleToken:
@@ -279,9 +286,13 @@ module.exports = {
             userId: data._id,
             token: passwordEncrypt(data._id + Date.now())
         })
+
+      
         // JWT:
         const accessToken = jwt.sign(data.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m' })
         const refreshToken = jwt.sign({ _id: data._id, password: data.password }, process.env.REFRESH_KEY, { expiresIn: '3d' })
+
+     
         /* AUTO LOGIN */
 
         res.status(201).send({
