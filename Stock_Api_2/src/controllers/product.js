@@ -27,8 +27,13 @@ module.exports = {
 
         //! ancak ekstra ayarlar yapmak istiyorsam  obje içinde yazarım
         const data = await res.getModelList(Product, {}, [
-            {       },
-            {       }]) // bu şekilde de populate yapabilirim.
+
+            //!select yapınca gelemesini istediğimiz field'i yazıyoruz.id otomatik geliyor.gelmesini istemediğimizin başına - ekliyoruz. mesela -_id  benim aşağıda ve 26.satırda yaptığım populate işlemi ancak ekstra ayarlar için aşağıdaki gibi yaptım  dizi içinde
+            {   path:'categoryId',select:'name'    },
+
+            //? path field 
+
+            {   path:'brandId' ,select:'name'   }]) // bu şekilde de populate yapabilirim.
 
         res.status(200).send({
             error: false,
@@ -65,7 +70,11 @@ module.exports = {
             #swagger.summary = "Get Single Product"
         */
 
-        const data = await Product.findOne({ _id: req.params.id })
+        const data = await Product.findOne({ _id: req.params.id }).populate([
+
+            {path:'categoryId',select:'name'    },
+
+            {   path:'brandId' ,select:'name'   }])
 
         res.status(200).send({
             error: false,
